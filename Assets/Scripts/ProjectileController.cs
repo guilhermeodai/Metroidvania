@@ -7,6 +7,7 @@ public class ProjectileController : MonoBehaviour
 	[SerializeField] float speed = default;
 	public Vector2 directionVector = default;
 	[SerializeField] GameObject impactEffect = default;
+	[SerializeField] int damage = 1;
 
 	Rigidbody2D projectileRigidbody;
 	Rigidbody2D playerRigidbody;
@@ -32,6 +33,12 @@ public class ProjectileController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
+		if (other.tag == "Enemy")
+		{
+			other.GetComponent<EnemyHealth> ().DamageEnemy (damage);
+		}
+
+
 		if (impactEffect != null)
 			Instantiate (impactEffect, transform.position, Quaternion.identity);
 		Destroy (gameObject);
